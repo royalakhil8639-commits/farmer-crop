@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriVision – Smart Farming &amp; Crop Guide</title>
+  <meta name="description" content="AgriVision is an educational agriculture platform with crop guides, farming methods, soil management, irrigation, pest management and modern smart farming practices.">
+  <meta property="og:title" content="AgriVision – Smart Farming &amp; Crop Guide">
+  <meta property="og:description" content="Discover crops, farming techniques, soil management, irrigation methods and modern agricultural practices for sustainable farming.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2322834a'/%3E%3Cpath d='M12 18 V9 M12 11 C12 8 10.5 7 8.5 7 C9 9.5 10.5 11 12 11 Z M12 14 C12 11 13.5 10 15.5 10 C15 12.5 13.5 14 12 14 Z' stroke='white' fill='white' stroke-width='.4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ======================= HEADER ======================= -->
+  <header class="site-header glass" id="siteHeader">
+    <div class="container">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20 V10"/><path d="M12 12 C12 8.5 10 7 7.5 7 C8 10 10 12 12 12 Z" fill="#fff" stroke="none"/>
+            <path d="M12 15.5 C12 12 13.8 10.5 16.5 10.5 C16 13.5 14 15.5 12 15.5 Z" fill="#fff" stroke="none"/>
+          </svg>
+        </span>
+        AgriVision
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="crops.html">Crops</a></li>
+          <li><a href="farming.html">Farming</a></li>
+          <li><a href="soil.html">Soil</a></li>
+          <li><a href="irrigation.html">Irrigation</a></li>
+          <li><a href="pest-management.html">Pest Management</a></li>
+          <li><a href="modern-farming.html">Modern Farming</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+  <!-- ======================= HERO ======================= -->
+  <section class="hero" aria-label="Welcome">
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <div id="farm3d" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <span class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 21 V11"/><path d="M12 13 C12 9.5 10 8 7.5 8 C8 10.5 10 13 12 13 Z"/><path d="M12 16.5 C12 13 13.8 11.5 16.5 11.5 C16 14.5 14 16.5 12 16.5 Z"/></svg>
+        Educational Smart Farming &amp; Crop Guide
+      </span>
+      <h1>Growing a Better Future Through Smart Agriculture</h1>
+      <p class="lead">Discover crops, farming techniques, soil management, irrigation methods and modern agricultural practices designed to support sustainable farming.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="crops.html">Explore Crops
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="btn btn-outline" href="farming.html">Learn Farming</a>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true"></div>
+  </section>
+
+  <!-- ======================= STATISTICS ======================= -->
+  <div class="container stats-band">
+    <div class="stats-card reveal">
+      <div class="stat"><span class="stat-num" data-count="15">0<sup>+</sup></span><span class="stat-label">Major Crops Covered</span></div>
+      <div class="stat"><span class="stat-num" data-count="10">0<sup>+</sup></span><span class="stat-label">Farming Methods</span></div>
+      <div class="stat"><span class="stat-num" data-count="7">0<sup>+</sup></span><span class="stat-label">Soil Types Explained</span></div>
+      <div class="stat"><span class="stat-num" data-count="10">0<sup>+</sup></span><span class="stat-label">Smart Technologies</span></div>
+    </div>
+  </div>
+
+  <!-- ======================= FEATURED CROPS + SEARCH ======================= -->
+  <section class="section" id="crops">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Crop Guide</span>
+        <h2>Explore Major Crops of India</h2>
+        <p>Search and explore detailed cultivation guides — season, soil, water, fertilizer, pest management, harvesting and storage.</p>
+      </div>
+      <div class="crop-tools reveal" style="max-width:560px;margin:0 auto 2.6rem">
+        <form class="search-box" id="homeSearchForm" role="search" aria-label="Search crops" style="flex:1;max-width:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+          <input type="search" id="homeSearchInput" placeholder="Search crops — rice, wheat, tomato, mango..." aria-label="Search crops">
+        </form>
+      </div>
+      <div class="crop-grid" id="featuredCrops"></div>
+      <div style="text-align:center;margin-top:2.6rem" class="reveal">
+        <a class="btn btn-dark" href="crops.html">View All 15 Crops
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= SEASONS ======================= -->
+  <section class="section tint" id="seasons">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Crop Calendar</span>
+        <h2>Major Agricultural Seasons</h2>
+        <p>Indian agriculture follows four broad cropping seasons. Actual sowing and harvesting periods vary by region and local conditions.</p>
+      </div>
+      <div class="grid-4">
+        <article class="card card-accent reveal d1">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 v2 M5.6 5.6 l1.4 1.4 M3 12 h2 M18 12 h3 M18.4 5.6 l-1.4 1.4"/><path d="M7 17 a5 5 0 1 1 10 0"/><path d="M2 21 h20"/></svg></div>
+          <h3>Kharif</h3>
+          <p><b>Period:</b> June–October</p>
+          <p><b>Weather:</b> Monsoon, warm and humid</p>
+          <p><b>Crops:</b> Rice, maize, cotton, sugarcane, soybean, groundnut, pigeonpea</p>
+        </article>
+        <article class="card card-accent reveal d2">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2 v20 M4 6 l16 12 M20 6 L4 18 M4 12 h16"/></svg></div>
+          <h3>Rabi</h3>
+          <p><b>Period:</b> October–March</p>
+          <p><b>Weather:</b> Cool and dry winter</p>
+          <p><b>Crops:</b> Wheat, potato, onion, chickpea, mustard, tomato</p>
+        </article>
+        <article class="card card-accent reveal d3">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2 v2 M12 20 v2 M2 12 h2 M20 12 h2 M4.9 4.9 l1.4 1.4 M17.7 17.7 l1.4 1.4 M19.1 4.9 l-1.4 1.4 M6.3 17.7 l-1.4 1.4"/></svg></div>
+          <h3>Zaid</h3>
+          <p><b>Period:</b> March–June</p>
+          <p><b>Weather:</b> Hot summer, irrigated short season</p>
+          <p><b>Crops:</b> Watermelon, cucumber, muskmelon, summer moong, fodder</p>
+        </article>
+        <article class="card card-accent reveal d4">
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 L12 4 L21 11"/><path d="M6 10 v10 h12 V10"/></svg></div>
+          <h3>Region-Specific</h3>
+          <p><b>Period:</b> Varies by state and agro-climatic zone</p>
+          <p><b>Weather:</b> Depends on local rainfall and temperature</p>
+          <p><b>Crops:</b> Millets in drylands, plantation and horticulture crops by region</p>
+        </article>
+      </div>
+      <p class="note reveal" style="margin-top:2rem"><b>Regional variation</b>The periods above are general. Always verify sowing and harvesting windows with your state agriculture department, as they shift with local weather and variety.</p>
+    </div>
+  </section>
+
+  <!-- ======================= FARMER KNOWLEDGE HUB ======================= -->
+  <section class="section" id="knowledge">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Practical Guidance</span>
+        <h2>Farmer Knowledge Hub</h2>
+        <p>Short, practical guidance on the everyday decisions that shape a successful crop season.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card reveal d1"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.5 18 a4.5 4.5 0 0 0 .4 -9 A6 6 0 0 0 6.2 10.5 4 4 0 0 0 7 18 Z"/></svg></div><h3>Weather Awareness</h3><p>Follow local forecasts and agro-advisories. Plan sowing, spraying and harvesting around weather windows to reduce losses.</p></article>
+        <article class="card reveal d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4 v1 M12 19 v1 M4 12 h1 M19 12 h1"/></svg></div><h3>Seed Selection</h3><p>Choose certified, region-appropriate varieties with resistance to local pests and diseases. Check germination before sowing.</p></article>
+        <article class="card reveal d3"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 h6 M10 3 v5 L4.5 19 a1.5 1.5 0 0 0 1.4 2 h12.2 a1.5 1.5 0 0 0 1.4 -2 L14 8 V3"/><path d="M7.5 14 h9"/></svg></div><h3>Soil Testing</h3><p>Test soil every 2–3 years to know pH, organic matter and nutrient levels — the basis for correct fertilizer planning.</p></article>
+        <article class="card reveal d4"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 C12 3 6 10 6 14.5 a6 6 0 0 0 12 0 C18 10 12 3 12 3 Z"/></svg></div><h3>Water Management</h3><p>Irrigate at critical crop stages rather than on a fixed calendar. Drip and sprinkler systems can save 30–50% water.</p></article>
+        <article class="card reveal d5"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21 c-5 0 -7 -3 -7 -6 0 -4 7 -5 7 -11 0 6 7 7 7 11 0 3 -2 6 -7 6 Z"/></svg></div><h3>Fertilizer Management</h3><p>Apply nutrients based on soil test and crop stage. Split nitrogen, and combine fertilizers with organic matter.</p></article>
+        <article class="card reveal d6"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21 l-4.5 -4.5"/><path d="M8 11 h6 M11 8 v6"/></svg></div><h3>Pest Monitoring</h3><p>Walk fields weekly and scout for early pest signs. Acting early with correct thresholds saves both crop and money.</p></article>
+        <article class="card reveal d1"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12 a9 9 0 1 1 -3 -6.7"/><polyline points="21 3 21 8 16 8"/></svg></div><h3>Crop Rotation</h3><p>Rotate crops — especially with legumes — to break pest cycles, balance nutrients and improve long-term soil health.</p></article>
+        <article class="card reveal d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20 L20 4"/><path d="M4 20 h7 M4 20 v-7"/><path d="M13 11 l3 -3 M8 16 l2 -2 M15 15 l2 -2"/></svg></div><h3>Harvest Planning</h3><p>Harvest at the right maturity stage. Arrange labour, machinery and drying space in advance to protect quality.</p></article>
+        <article class="card reveal d3"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 l9 -6 9 6 v11 a1 1 0 0 1 -1 1 H4 a1 1 0 0 1 -1 -1 Z"/><path d="M9 21 V12 h6 v9"/></svg></div><h3>Storage</h3><p>Dry produce to safe moisture before storage. Clean, aerated, pest-proof storage prevents major post-harvest losses.</p></article>
+        <article class="card reveal d4"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17 l6 -6 4 4 8 -8"/><polyline points="15 7 21 7 21 13"/></svg></div><h3>Market Awareness</h3><p>Track mandi prices and demand before selling. Diversifying produce and timing sales can significantly raise income.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= SUSTAINABILITY ======================= -->
+  <section class="section soft" id="sustainability">
+    <div class="container">
+      <div class="split">
+        <div class="reveal-left">
+          <span class="eyebrow">Sustainable Agriculture</span>
+          <h2>Farming That Protects the Future</h2>
+          <p class="lead" style="margin:.9rem 0 1.4rem">Sustainable farming keeps soil fertile, water secure and farms profitable for the next generation. Key principles include:</p>
+          <ul class="list-check">
+            <li>Water conservation and rainwater harvesting</li>
+            <li>Soil conservation with cover crops and minimum disturbance</li>
+            <li>Crop diversification and rotation</li>
+            <li>Organic matter management — compost, green manure, residue recycling</li>
+            <li>Reduced unnecessary chemical use through IPM</li>
+            <li>Renewable energy such as solar pumps</li>
+            <li>Efficient irrigation — drip, sprinklers, scheduling</li>
+            <li>Biodiversity on and around the farm</li>
+          </ul>
+          <div style="margin-top:1.8rem"><a class="btn btn-primary" href="farming.html">Explore Farming Methods
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a></div>
+        </div>
+        <div class="reveal-scale">
+          <div class="cycle" aria-label="Farm Sustainability Cycle">
+            <div class="node">Healthy Soil<small>Fertile, living soil</small></div>
+            <div class="node">Healthy Crops<small>Strong growth, less stress</small></div>
+            <div class="node">Efficient Water Use<small>Less waste, right timing</small></div>
+            <div class="node">Better Resource Management<small>Lower cost, less risk</small></div>
+            <div class="node">Sustainable Farm<small>Stable income — back to healthy soil</small></div>
+          </div>
+          <p class="cycle-loop">The Farm Sustainability Cycle — each stage reinforces the next, and the cycle returns to healthy soil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= WEATHER-STYLE VISUAL (SAMPLE) ======================= -->
+  <section class="section" id="weatherVisual">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Farm Conditions</span>
+        <h2>Today's Field Weather Board</h2>
+        <p>A demonstration weather board showing the kind of field data modern farmers track. <b>Sample Data — not live readings.</b></p>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-card reveal d1"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4 a4 4 0 1 0 -4 0"/><path d="M12 4 v10 a3 3 0 1 0 .01 0 Z" fill="currentColor" opacity=".2"/></svg></div><div class="dash-val">31<span style="font-size:1rem">&deg;C</span></div><div class="dash-unit">Temperature</div><span class="sample-note">Sample Data</span></div>
+        <div class="dash-card reveal d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 C12 3 6 10 6 14.5 a6 6 0 0 0 12 0 C18 10 12 3 12 3 Z"/></svg></div><div class="dash-val">68%</div><div class="dash-unit">Humidity</div><span class="sample-note">Sample Data</span></div>
+        <div class="dash-card reveal d3"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.5 15 a4.5 4.5 0 0 0 .4 -9 A6 6 0 0 0 6.2 7.5 4 4 0 0 0 7 15 Z"/><path d="M8 18 l-1 2 M12 18 l-1 2 M16 18 l-1 2"/></svg></div><div class="dash-val">12 mm</div><div class="dash-unit">Rainfall (24h)</div><span class="sample-note">Sample Data</span></div>
+        <div class="dash-card reveal d4"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 14 h20 M4 18 h16 M6 22 h12"/><path d="M12 3 C12 3 8 8 8 11 a4 4 0 0 0 8 0 C16 8 12 3 12 3 Z"/></svg></div><div class="dash-val">62%</div><div class="dash-unit">Soil Moisture</div><span class="sample-note">Sample Data</span></div>
+        <div class="dash-card reveal d5"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8 h9 a3 3 0 1 0 -3 -3 M3 12 h13 a3 3 0 1 1 -3 3 M3 16 h6"/></svg></div><div class="dash-val">9 km/h</div><div class="dash-unit">Wind Speed</div><span class="sample-note">Sample Data</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= FARM INSIGHTS DASHBOARD (SAMPLE) ======================= -->
+  <section class="section tint" id="farmInsights">
+    <div class="container" id="insightsDashboard">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Farm Insights</span>
+        <h2>Field Health Dashboard</h2>
+        <p>An animated demonstration dashboard of the insights smart-farming tools can surface. <b>Sample Data.</b></p>
+      </div>
+      <div class="split" style="align-items:stretch">
+        <div class="chart-card reveal">
+          <h3 style="margin-bottom:.3rem">Soil Moisture — Last 7 Days</h3>
+          <p style="font-size:.85rem;margin-bottom:1rem">Sample percentages for illustration</p>
+          <svg class="chart-svg" viewBox="0 0 600 220" preserveAspectRatio="none" role="img" aria-label="Sample line chart of soil moisture over seven days">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2ea35a" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="#2ea35a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="#e5efe7" stroke-width="1">
+              <line x1="0" y1="55" x2="600" y2="55"/><line x1="0" y1="110" x2="600" y2="110"/><line x1="0" y1="165" x2="600" y2="165"/>
+            </g>
+            <path class="chart-area" d="M30,132 L125,110 L220,121 L315,88 L410,99 L505,71 L585,80 L585,210 L30,210 Z"/>
+            <path class="chart-line" d="M30,132 L125,110 L220,121 L315,88 L410,99 L505,71 L585,80"/>
+            <g class="chart-dots">
+              <circle class="chart-dot" cx="30" cy="132" r="5"/><circle class="chart-dot" cx="125" cy="110" r="5"/>
+              <circle class="chart-dot" cx="220" cy="121" r="5"/><circle class="chart-dot" cx="315" cy="88" r="5"/>
+              <circle class="chart-dot" cx="410" cy="99" r="5"/><circle class="chart-dot" cx="505" cy="71" r="5"/>
+              <circle class="chart-dot" cx="585" cy="80" r="5"/>
+            </g>
+          </svg>
+          <span class="sample-note">Sample Data</span>
+        </div>
+        <div class="chart-card reveal d2" style="display:flex;flex-direction:column;justify-content:center;gap:1.5rem">
+          <div class="meter"><div class="meter-top"><b>Crop Health</b><span>88%</span></div><div class="meter-track"><div class="meter-fill" data-value="88"></div></div></div>
+          <div class="meter"><div class="meter-top"><b>Soil Condition</b><span>76%</span></div><div class="meter-track"><div class="meter-fill" data-value="76"></div></div></div>
+          <div class="meter"><div class="meter-top"><b>Water Level</b><span>62%</span></div><div class="meter-track"><div class="meter-fill" data-value="62"></div></div></div>
+          <div class="meter"><div class="meter-top"><b>Weather Status</b><span>81% favourable</span></div><div class="meter-track"><div class="meter-fill" data-value="81"></div></div></div>
+          <span class="sample-note">Sample Data</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CTA ======================= -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-band reveal-scale">
+        <span class="eyebrow" style="color:#cdeeda">Start Learning</span>
+        <h2>From Soil Preparation to Smart Harvesting</h2>
+        <p>Dive into practical guides on farming methods, soil health, irrigation, pest management and modern agricultural technology.</p>
+        <a class="btn btn-outline" href="farming.html" style="border-color:#fff">Explore Farming Methods</a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20 V10"/><path d="M12 12 C12 8.5 10 7 7.5 7 C8 10 10 12 12 12 Z" fill="#fff" stroke="none"/><path d="M12 15.5 C12 12 13.8 10.5 16.5 10.5 C16 13.5 14 15.5 12 15.5 Z" fill="#fff" stroke="none"/></svg></span>
+            AgriVision
+          </a>
+          <p class="footer-tag">Growing Knowledge. Supporting Agriculture.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="crops.html">Crops</a></li>
+            <li><a href="farming.html">Farming</a></li>
+            <li><a href="soil.html">Soil</a></li>
+            <li><a href="irrigation.html">Irrigation</a></li>
+            <li><a href="modern-farming.html">Modern Farming</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Topics</h4>
+          <ul>
+            <li><a href="crops.html">Crop Guide</a></li>
+            <li><a href="soil.html">Soil Health</a></li>
+            <li><a href="irrigation.html">Water Management</a></li>
+            <li><a href="modern-farming.html">Smart Farming</a></li>
+            <li><a href="index.html#sustainability">Sustainable Agriculture</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Get in Touch</h4>
+          <ul>
+            <li><a href="contact.html">Contact Form</a></li>
+            <li><span>info@agrivision.example</span></li>
+            <li><span>+91 00000 00000</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-disclaimer">This website is an educational project. Crop recommendations, planting periods, irrigation requirements and agricultural practices can vary according to location, soil, weather and local conditions. Farmers should consult local agricultural experts or government agricultural services for location-specific recommendations.</p>
+      <div class="footer-bottom">
+        <span>&copy; 2026 AgriVision. Educational Project.</span>
+        <span>Static website &middot; HTML5 &middot; CSS3 &middot; JavaScript &middot; Three.js</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
