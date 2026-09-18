@@ -1,0 +1,31 @@
+name: Checks
+
+# Runs the static-site integrity checker and the DOM smoke tests on every
+# push and pull request, so a broken link or a JS error never reaches main.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # The site itself has no dependencies; this installs the test tooling only.
+      - name: Install test tooling
+        run: npm install --no-audit --no-fund
+
+      - name: Static integrity check (links, ids, SEO basics, crop data)
+        run: npm run check
+
+      - name: DOM smoke tests (every page, search, filters, contact form)
+        run: npm test
