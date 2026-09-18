@@ -1,0 +1,29 @@
+# Operating system noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (only dev tooling – the site itself ships no dependencies)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+
+# Local environment / secrets
+# Never commit a real Supabase service_role key or any private token.
+.env
+.env.*
+!.env.example
+
+# Local tooling output
+*.log
+.cache/
+coverage/
+tmp/
