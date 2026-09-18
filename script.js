@@ -361,7 +361,14 @@
   function initHeader() {
     var header = $('#siteHeader');
     if (!header) return;
-    var path = location.pathname.split('/').pop() || 'index.html';
+
+    /* Compare pages by name, not by exact URL, so the highlight also works on
+       clean URLs such as /crops (Netlify/Vercel) and /crops.html (Pages). */
+    function pageKey(value) {
+      var file = (value || '').split('#')[0].split('?')[0].split('/').pop() || 'index';
+      return file.replace(/\.html$/i, '') || 'index';
+    }
+    var path = pageKey(location.pathname);
 
     function setState() {
       var scrolled = window.scrollY > 40;
@@ -373,8 +380,8 @@
     window.addEventListener('scroll', setState, { passive: true });
 
     $$('.nav-links a').forEach(function (a) {
-      var href = a.getAttribute('href');
-      if (href === path || (path === 'crop-details.html' && href === 'crops.html')) {
+      var key = pageKey(a.getAttribute('href'));
+      if (key === path || (path === 'crop-details' && key === 'crops')) {
         a.classList.add('active');
         a.setAttribute('aria-current', 'page');
       }
@@ -648,6 +655,42 @@
   }
 
   /* ======================================================================
+     SITE CONFIGURATION (optional values read from supabase-config.js)
+     ====================================================================== */
+  function configValue(key, fallback) {
+    return (typeof window[key] === 'undefined' || window[key] === '') ? fallback : window[key];
+  }
+
+  /* Contact details + footer year are maintained in one place, not in nine
+     HTML files. Values come from supabase-config.js (see that file's header). */
+  function initSiteConfig() {
+    var year = new Date().getFullYear();
+    $$('[data-year]').forEach(function (el) { el.textContent = year; });
+
+    var emailHost = $('[data-contact-email]');
+    if (emailHost) {
+      var email = configValue('CONTACT_EMAIL', '');
+      if (!email) {
+        var emailRow = emailHost.closest('.contact-item');
+        if (emailRow) emailRow.style.display = 'none';
+      } else {
+        emailHost.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+      }
+    }
+
+    var phoneHost = $('[data-contact-phone]');
+    if (phoneHost) {
+      var phone = configValue('CONTACT_PHONE', '');
+      if (!phone) {
+        var phoneRow = phoneHost.closest('.contact-item');
+        if (phoneRow) phoneRow.style.display = 'none';
+      } else {
+        phoneHost.innerHTML = '<a href="tel:' + phone.replace(/[^\d+]/g, '') + '">' + phone + '</a>';
+      }
+    }
+  }
+
+  /* ======================================================================
      CONTACT FORM (validated in the browser, submitted to Supabase)
      ====================================================================== */
   function getSupabaseClient() {
@@ -661,41 +704,89 @@
     return window.__agrivisionSupabase;
   }
 
+  /* Why the form cannot send — phrased for a visitor, not for a developer. */
+  function backendProblemMessage() {
+    var email = configValue('CONTACT_EMAIL', '');
+    var alternative = email ? ' In the meantime you can write to ' + email + '.' : '';
+    if (typeof window.supabase === 'undefined') {
+      return 'The secure messaging library could not be loaded — a network filter or ad-blocker may be blocking it. '
+        + 'Please check your connection and try again.' + alternative;
+    }
+    return 'Sorry, this site is not connected to its database yet, so your message was not sent. '
+      + 'Please try again later.' + alternative;
+  }
+
+  /* Turn a Supabase/network error into something a visitor can act on. */
+  function sendErrorMessage(error) {
+    var raw = (error && (error.message || error.error_description || error.details || error.hint)) || '';
+    if (/failed to fetch|networkerror|network request failed|load failed|timeout/i.test(raw)) {
+      return 'Your message could not reach the server — this usually means the connection dropped. '
+        + 'Please check your internet connection and try again.';
+    }
+    if (/row-level security|permission denied|violates|policy|unauthorized|jwt/i.test(raw)) {
+      return 'The database refused this message. If you are the site owner, check the Row Level Security '
+        + 'policies in supabase-schema.sql.';
+    }
+    return 'Sorry, something went wrong sending your message. Please try again in a moment.';
+  }
+
   function initContact() {
     var form = $('#contactForm');
     if (!form) return;
     var submitBtn = $('button[type="submit"]', form);
     var submitBtnDefaultHTML = submitBtn ? submitBtn.innerHTML : '';
+    var success = $('#formSuccess');
+    var successText = $('#formSuccessText');
+    var sending = false;
+
+    function banner(message, isError) {
+      if (!success || !successText) return;
+      successText.textContent = message;
+      success.classList.add('show');
+      success.classList.toggle('is-error', !!isError);
+      success.setAttribute('tabindex', '-1');
+      success.focus({ preventScroll: false });
+    }
+
+    function hideBanner() {
+      if (success) success.classList.remove('show', 'is-error');
+    }
+
+    function setBusy(state) {
+      sending = state;
+      if (!submitBtn) return;
+      submitBtn.disabled = state;
+      submitBtn.innerHTML = state ? 'Sending&hellip;' : submitBtnDefaultHTML;
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (sending) return; // ignore double clicks / double Enter
+
       var ok = true;
       function check(id, fn, msg) {
         var input = $('#' + id), field = input.closest('.field'), err = $('.err', field);
         var valid = fn(input.value.trim());
         field.classList.toggle('invalid', !valid);
+        input.setAttribute('aria-invalid', valid ? 'false' : 'true');
         if (!valid) { err.textContent = msg; ok = false; }
       }
-      check('cName', function (v) { return v.length >= 2; }, 'Please enter your full name (at least 2 characters).');
-      check('cEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }, 'Please enter a valid email address.');
-      check('cPhone', function (v) { return v === '' || /^[+\d][\d\s-]{7,14}$/.test(v); }, 'Please enter a valid phone number (or leave it blank).');
+      check('cName', function (v) { return v.length >= 2 && v.length <= 120; }, 'Please enter your full name (2–120 characters).');
+      check('cEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) && v.length <= 160; }, 'Please enter a valid email address.');
+      check('cPhone', function (v) { return v === '' || (/^[+\d][\d\s-]{7,14}$/.test(v) && v.length <= 20); }, 'Please enter a valid phone number (or leave it blank).');
       check('cSubject', function (v) { return v !== ''; }, 'Please select a subject.');
-      check('cMessage', function (v) { return v.length >= 10; }, 'Please write a message of at least 10 characters.');
+      check('cMessage', function (v) { return v.length >= 10 && v.length <= 5000; }, 'Please write a message of at least 10 characters (maximum 5000).');
 
-      var success = $('#formSuccess');
-      var successText = $('#formSuccessText');
       if (!ok) {
-        success.classList.remove('show', 'is-error');
+        hideBanner();
+        var firstInvalid = $('.field.invalid input, .field.invalid select, .field.invalid textarea', form);
+        if (firstInvalid) firstInvalid.focus();
         return;
       }
 
       var client = getSupabaseClient();
       if (!client) {
-        success.classList.remove('is-error');
-        successText.textContent = 'Configuration error: this site is not yet connected to a database. Please contact the site administrator.';
-        success.classList.add('show', 'is-error');
-        success.setAttribute('tabindex', '-1');
-        success.focus({ preventScroll: false });
+        banner(backendProblemMessage(), true);
         return;
       }
 
@@ -707,33 +798,51 @@
         message: $('#cMessage').value.trim()
       };
 
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Sending&hellip;';
-      }
-      success.classList.remove('show', 'is-error');
+      setBusy(true);
+      hideBanner();
 
-      client.from('contact_submissions').insert([payload]).then(function (result) {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = submitBtnDefaultHTML;
-        }
-        if (result.error) {
-          successText.textContent = 'Sorry, something went wrong sending your message. Please try again in a moment.';
-          success.classList.add('show', 'is-error');
-        } else {
+      /* Never leave the visitor staring at a disabled button: give up politely
+         if the request hangs (supabase-js has no built-in request timeout). */
+      var timeoutMs = typeof window.CONTACT_TIMEOUT_MS === 'number' ? window.CONTACT_TIMEOUT_MS : 15000;
+      var settled = false;
+      var timer = setTimeout(function () {
+        if (settled) return;
+        settled = true;
+        setBusy(false);
+        banner('This is taking longer than expected, so we stopped waiting. Please check your connection and try again.', true);
+      }, timeoutMs);
+
+      function finish(handler) {
+        return function (value) {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          setBusy(false);
+          handler(value);
+        };
+      }
+
+      client.from('contact_submissions').insert([payload]).then(
+        finish(function (result) {
+          if (result.error) {
+            banner(sendErrorMessage(result.error), true);
+            return;
+          }
           form.reset();
           $$('.field', form).forEach(function (f) { f.classList.remove('invalid'); });
-          successText.textContent = 'Thank you. Your message has been sent.';
-          success.classList.remove('is-error');
-          success.classList.add('show');
-        }
-        success.setAttribute('tabindex', '-1');
-        success.focus({ preventScroll: false });
-      });
+          banner('Thank you. Your message has been sent. We usually reply within 2–3 working days.', false);
+        }),
+        finish(function (error) {
+          banner(sendErrorMessage(error), true);
+        })
+      );
     });
+
     $$('#contactForm input,#contactForm textarea,#contactForm select').forEach(function (el) {
-      el.addEventListener('input', function () { el.closest('.field').classList.remove('invalid'); });
+      el.addEventListener('input', function () {
+        el.closest('.field').classList.remove('invalid');
+        el.setAttribute('aria-invalid', 'false');
+      });
     });
   }
 
@@ -750,11 +859,15 @@
   function initHero3D() {
     var holder = $('#farm3d');
     if (!holder) return;
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduced = typeof window.matchMedia === 'function'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced || !window.THREE || !supportsWebGL()) {
       holder.style.display = 'none';
       return; // CSS .hero-fallback stays visible
     }
+
+    // Lighter scene on small screens: phones get the same look, less GPU work
+    var smallScreen = Math.min(window.innerWidth, window.innerHeight) < 720;
 
     try {
       var THREE = window.THREE;
@@ -997,7 +1110,8 @@
       /* Clouds */
       var clouds = [];
       var cloudMat = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.92 });
-      for (var ci = 0; ci < 5; ci++) {
+      var cloudCount = smallScreen ? 3 : 5;
+      for (var ci = 0; ci < cloudCount; ci++) {
         var cloud = new THREE.Group();
         var parts = 4 + (ci % 3);
         for (var cp = 0; cp < parts; cp++) {
@@ -1011,7 +1125,7 @@
       }
 
       /* Floating dust / pollen particles */
-      var P = 220, pos = new Float32Array(P * 3);
+      var P = smallScreen ? 90 : 220, pos = new Float32Array(P * 3);
       for (var pi = 0; pi < P; pi++) {
         pos[pi * 3] = (Math.random() - 0.5) * 110;
         pos[pi * 3 + 1] = Math.random() * 16 + 0.5;
@@ -1022,19 +1136,21 @@
       var particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0xfff3c4, size: 0.42, transparent: true, opacity: 0.75 }));
       scene.add(particles);
 
-      /* Animation loop */
-      var mouseX = 0, t = 0, running = true;
+      /* Animation loop — stops completely when the tab is hidden or the hero
+         has scrolled out of view, so it never burns battery in the background */
+      var mouseX = 0, t = 0, looping = false, onScreen = true;
       holder.parentElement.addEventListener('mousemove', function (e) {
         var r = holder.getBoundingClientRect();
         mouseX = ((e.clientX - r.left) / r.width - 0.5) * 2;
       });
-      document.addEventListener('visibilitychange', function () {
-        running = !document.hidden;
-        if (running) tick();
-      });
+
+      function shouldAnimate() { return !document.hidden && onScreen; }
+      function start() {
+        if (!looping && shouldAnimate()) { looping = true; tick(); }
+      }
 
       function tick() {
-        if (!running) return;
+        if (!shouldAnimate()) { looping = false; return; }
         requestAnimationFrame(tick);
         t += 0.008;
 
@@ -1082,10 +1198,19 @@
 
         renderer.render(scene, camera);
       }
-      tick();
+
+      document.addEventListener('visibilitychange', start);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          onScreen = entries[0].isIntersecting;
+          if (onScreen) start();
+        }, { threshold: 0 }).observe(holder);
+      }
+      start();
 
       window.addEventListener('resize', function () {
         W = holder.clientWidth; H = holder.clientHeight;
+        if (!W || !H) return;
         camera.aspect = W / H;
         camera.updateProjectionMatrix();
         renderer.setSize(W, H);
@@ -1097,7 +1222,11 @@
   }
 
   /* ---------- Boot ---------- */
-  document.addEventListener('DOMContentLoaded', function () {
+  /* The markup is static HTML, so this only wires behaviour on top of it.
+     Runs once on DOMContentLoaded, or immediately if the script is loaded
+     with `defer` after the document is already interactive. */
+  function boot() {
+    initSiteConfig();
     initHeader();
     initHero3D();
     initFeatured();
@@ -1108,5 +1237,11 @@
     initCounters();
     initDashboard();
     initReveal();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();

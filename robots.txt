@@ -1,0 +1,12 @@
+# AgriVision – robots.txt
+# Replace https://example.com with your live address (npm run set-domain -- https://your-domain.com)
+
+User-agent: *
+Allow: /
+
+# No admin, no private areas, nothing to hide — but keep tooling out of the index
+Disallow: /tools/
+Disallow: /test/
+Disallow: /node_modules/
+
+Sitemap: https://example.com/sitemap.xml
